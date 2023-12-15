@@ -5,6 +5,7 @@ export const Addtransaction = () => {
   const { addTransaction } = useContext(GlobalContext);
   const [text, setText] = useState("");
   const [amount, setAmount] = useState("");
+  const isButtonDisabled = !text.trim() || !amount.trim();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -16,6 +17,9 @@ export const Addtransaction = () => {
     };
 
     addTransaction(newTransaction);
+
+    setText("");
+    setAmount("");
   };
   return (
     <div>
@@ -47,7 +51,15 @@ export const Addtransaction = () => {
             className=" border-gray-200 border-2 w-full p-1 text-sm my-1 md:text-lg rounded-lg"
           />
         </div>
-        <button className="bg-indigo-400 w-full text-xs md:text-lg p-2 text-white rounded-md">
+        <button
+          type="submit"
+          disabled={isButtonDisabled}
+          className={`w-full text-xs md:text-lg p-2 rounded-md transition-colors ${
+            isButtonDisabled
+              ? "bg-slate-400 text-gray-700 cursor-not-allowed"
+              : "bg-slate-900 text-white hover:bg-slate-800"
+          }`}
+        >
           Add transaction
         </button>
       </form>
